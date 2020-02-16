@@ -12,15 +12,12 @@ app.use(bodyParser.json())
 app.use(morgan('dev'))
 app.use(cors())
 
+//config
 require('./config/connectDB')(app)
+require('./config/passport')
 
-const UserRoute = require('./routes/UserRoute')
-const AthleteRoute = require('./routes/AthleteRoute')
-
-app.use('',
-    UserRoute,
-    AthleteRoute
-)
-
+//set Routes
+app.use('/register', require('./routes/User'))
+app.use('/types', require('./routes/Type'))
 
 module.exports = app

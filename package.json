@@ -2,9 +2,9 @@
   "name": "api-sport",
   "version": "1.0.0",
   "description": "Project of CEIT Software Team",
-  "main": "index.js",
+  "main": "./bin/server.js",
   "scripts": {
-    "start": "nodemon server.js",
+    "start": "nodemon ./bin/server.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
@@ -14,12 +14,17 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "@hapi/joi": "^17.1.0",
+    "bcryptjs": "^2.4.3",
     "body-parser": "^1.19.0",
     "cors": "^2.8.5",
     "dotenv": "^8.2.0",
     "express": "^4.17.1",
+    "jsonwebtoken": "^8.5.1",
     "mongoose": "^5.8.11",
     "morgan": "^1.9.1",
-    "nodemon": "^2.0.2"
+    "nodemon": "^2.0.2",
+    "passport": "^0.4.1",
+    "passport-jwt": "^4.0.0"
   }
 }
