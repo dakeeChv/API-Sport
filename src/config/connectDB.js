@@ -7,7 +7,7 @@ module.exports = () => {
         +process.env.Password
         +'@cluster0-8jamz.mongodb.net/'
         +process.env.Database+'?retryWrites=true&w=majority',
-        { useNewUrlParser: true, useUnifiedTopology: true })
+        { useNewUrlParser: true, useUnifiedTopology: true, useCreateIndex: true })
     .then(result => {
         if (result) console.log('Connect DB ...')
     }).catch(err => console.log(err))

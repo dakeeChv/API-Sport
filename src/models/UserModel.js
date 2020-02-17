@@ -14,7 +14,8 @@ UserSchema.methods.generateJWT = function() {
     return jwt.sign({
         id: this._id,
         user: this.account_name,
-        classId: this.classId
+        classId: this.classId,
+        typeUserId: this.typeUserId,
     }, process.env.secret, { expiresIn: 60 * 60 * 24 * 7 })
 }
   
@@ -22,6 +23,8 @@ UserSchema.methods.toAuthJSON = function() {
     return {
       _id: this._id,
       user: this.account_name,
+      classId: this.classId,
+      typeUserId: this.typeUserId,
       token: this.generateJWT()
     }
 }

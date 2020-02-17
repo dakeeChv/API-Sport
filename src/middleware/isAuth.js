@@ -3,6 +3,7 @@ const passport = require('passport')
 exports.auth = function (req, res, next) {
   passport.authenticate('jwt', function (err, user) {
     if (err || user === false) {
+     // 403 Forbidden
       res.status(403).send({
         error: "you can't access to the resource."
       })

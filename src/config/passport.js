@@ -1,4 +1,4 @@
-const User = require('../models/User')
+const User = require('../models/UserModel')
 const passport = require('passport')
 
 const JwtStrategy = require('passport-jwt').Strategy
@@ -9,12 +9,14 @@ passport.use( new JwtStrategy({
     secretOrKey: process.env.secret
 }, async (JwtPayload, done) => {
     try {
-        const user = await User.find({ _id: JwtPayload.id })
-        
-        if (user.length >= 1) {
-            return done(null, user)
-        }
-        return done(new Error(), false)
+        await User.findById({ _id: JwtPayload.id }).
+            then(user => {
+                if (user) {
+                    return done(null, user)
+                } else {
+                    return done(new Error(), false)
+                }
+            })
     } catch (error) {
         return done(new Error(), false)
     }

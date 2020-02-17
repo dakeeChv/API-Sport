@@ -8,6 +8,7 @@ const app = express()
 
 dotenv.config()
 
+app.use(bodyParser.urlencoded({ extended: false }))
 app.use(bodyParser.json())
 app.use(morgan('dev'))
 app.use(cors())
@@ -17,7 +18,7 @@ require('./config/connectDB')(app)
 require('./config/passport')
 
 //set Routes
-app.use('/register', require('./routes/User'))
-app.use('/types', require('./routes/Type'))
+app.use('/register', require('./routes/UserRoute'))
+app.use('/types', require('./routes/TypeRoute'))
 
 module.exports = app
