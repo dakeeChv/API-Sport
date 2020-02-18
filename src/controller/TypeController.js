@@ -2,8 +2,8 @@ const Type = require('../models/TypeModel')
 
 exports.read = async (req, res) => {
     try {
-        const infoType = await Type.find()
-        return res.status(200).send(infoType)
+        const TypeInfo = await Type.find()
+        return res.status(200).send(TypeInfo)
 
     } catch (error) {
         console.log(error)
@@ -18,13 +18,13 @@ exports.create = async (req, res) => {
         const TypeExist = await Type.findOne({ name: req.body.name })
         if (TypeExist) return res.status(400).send('Type Already Exists')
 
-        const infoType = new Type({
+        const TypeInfo = new Type({
             name: req.body.name,
             createdAt: new Date(),
             updatedAt: new Date()
         })
 
-        await infoType.save()
+        await TypeInfo.save()
 
         return res.status(201).send('Create Type')
 
@@ -54,7 +54,7 @@ exports.update = async (req, res) => {
 
 exports.destory = async (req, res) => {
     try {
-        const TypeExist = await Type.findOne({ _id: req.params.id }).then(async type => {
+        await Type.findOne({ _id: req.params.id }).then(async type => {
             if (type) {
                 await Type.deleteOne({ _id: req.params.id })
                 return res.status(200).send('Deleted Type')

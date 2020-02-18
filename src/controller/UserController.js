@@ -14,7 +14,7 @@ exports.signup = async (req, res, next) => {
         var salt = await bcryptjs.genSalt(8)
         var hash = await bcryptjs.hash(req.body.password, salt)
 
-        const infoUser = new User({
+        const UserInfo = new User({
             account_name : req.body.account_name,
             password : hash,
             classId : req.body.classId,
@@ -23,8 +23,8 @@ exports.signup = async (req, res, next) => {
             updatedAt: new Date()
         })
         
-        await infoUser.save()
-        const token = infoUser.generateJWT()
+        await UserInfo.save()
+        const token = UserInfo.generateJWT()
         
         res.status(201).header('authorization', token).end('Created User')
 
@@ -58,7 +58,7 @@ exports.signin = async (req, res, next) => {
                 return res.status(202).header('auto-token', user.token).send(info);
     
             } else {
-                return res.status(400).send("Email isn't signup")
+                return res.status(400).send("Account isn't signup")
             }
         })
     
