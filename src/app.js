@@ -18,7 +18,10 @@ require('./config/connectDB')(app)
 require('./config/passport')
 
 //set Routes
-app.use('/register', require('./routes/UserRoute'))
-app.use('/types', require('./routes/TypeRoute'))
+app.use(
+    require('./routes/UserRoute'), 
+    require('./routes/SportTypeRoute')
+)
+//app.use(require('./routes/SportTypeRoute'))
 
 module.exports = app

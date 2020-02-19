@@ -26,7 +26,7 @@ exports.signup = async (req, res, next) => {
         await UserInfo.save()
         const token = UserInfo.generateJWT()
         
-        res.status(201).header('authorization', token).end('Created User')
+        res.status(201).header('authorization', token).end('Signup, Success')
 
     } catch (error) {
         console.log(error)
@@ -91,7 +91,7 @@ exports.update = async (req, res, next) => {
 
         const token = await accountExist.generateJWT()
         
-        return res.status(200).header('authorization', token).send('Updated User')
+        return res.status(200).header('authorization', token).send('Update User, Success')
         
     } catch (error) {
         console.log(error)
@@ -104,12 +104,12 @@ exports.destory = async (req, res) => {
     try {
         const id = req.params.id
 
-        const accountExist = await User.findOne({ _id: req.params.id })
+        const accountExist = await User.findOne({ _id: id })
         if (!accountExist) return res.status(400).send("Account is't signup")
 
         await User.deleteOne({ _id: req.params.id })
         .then(result => {
-            if (result) return res.status(200).send('Deleted User')
+            if (result) return res.status(200).send('Delete User, Success')
         })
         .catch(error => {
             if (error) return res.status(400).send("Account can't delete")
