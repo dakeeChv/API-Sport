@@ -20,7 +20,10 @@ require('./config/passport')
 //set Routes
 app.use(
     require('./routes/UserRoute'), 
-    require('./routes/SportTypeRoute')
+    require('./routes/SportTypeRoute'),
+    require('./routes/ClassroomRoute'),
+    require('./routes/AthleteRoute'),
+    require('./routes/UserTypeRoute')
 )
 //app.use(require('./routes/SportTypeRoute'))
 
