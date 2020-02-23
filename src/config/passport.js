@@ -9,7 +9,7 @@ passport.use( new JwtStrategy({
     secretOrKey: process.env.secret
 }, async (JwtPayload, done) => {
     try {
-        await User.findById({ _id: JwtPayload.id }).
+        await User.findById({ _id: JwtPayload._id }).
             then(user => {
                 if (user) {
                     return done(null, user)

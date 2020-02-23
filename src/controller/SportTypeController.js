@@ -7,7 +7,6 @@ exports.read = async (req, res) => {
 
     } catch (error) {
         console.log(error)
-
         // 500 Internal Server Error
         return res.status(500).send('Internal Server Error. Please try agrain')
     }
@@ -48,6 +47,7 @@ exports.update = async (req, res) => {
         return res.status(400).send("SportType can't update")
 
     } catch (error) {
+      console.log(error)
       // 500 Internal Server Error
       return res.status(500).send('Internal Server Error. Please try again')
     }
@@ -64,6 +64,7 @@ exports.destory = async (req, res) => {
             }
         })
     } catch (error) {
+        console.log(error)
         // 500 Internal Server Error
         return res.status(500).send('Internal Server Error. Please try agrain')
     }

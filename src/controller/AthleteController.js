@@ -2,11 +2,25 @@ const athlete = require('../models/AthleteModel')
 
 exports.read = async (req, res) =>{
     try {
-        const athleteInfo = await athlete.find()
+        const athleteInfo = await athlete.find().populate('sportType_id')
         return res.status(200).send(athleteInfo)
 
     } catch (error) {
-        return res.status(500).send('')
+        console.log(error)
+        // 500 Internal Server Error
+        return res.status(500).send('Internal Server Error. Please try agrain')
+    }
+}
+
+exports.readByChoice = async (req, res) =>{
+    try {
+        const athleteInfo = await athlete.find().all('sportType_id', req.body).populate('sportType_id')
+        return res.status(200).send(athleteInfo)
+
+    } catch (error) {
+        console.log(error)
+        // 500 Internal Server Error
+        return res.status(500).send('Internal Server Error. Please try agrain')
     }
 }
 
@@ -19,12 +33,15 @@ exports.search = async (req, res) =>{
         return res.status(200).send(athleteInfo)
 
     } catch (error) {
-        return res.status(500).send('')
+        console.log(error)
+        // 500 Internal Server Error
+        return res.status(500).send('Internal Server Error. Please try agrain')
     }
 }
 
 exports.create = async (req, res) => {
     try {
+        const { _id } = req.user
         const athleteInfo = new athlete({
             name: req.body.name,
             surname: req.body.surname,
@@ -33,17 +50,19 @@ exports.create = async (req, res) => {
             email: req.body.email,
             facebook: req.body.facebook,
             whatsapp: req.body.whatsapp,
-            typeUser_id: req.body.typeUser_id,
+            user_id: _id,
+            sportType_id: req.body.sportType_id,
             createdAt: new Date(),
             updatedAt: new Date()
         })
 
         await athleteInfo.save()
-        return res.status(201).send()
+        return res.status(201).send("Create Athlete, Success")
 
     } catch (error) {
         console.log(error)
-        return res.status(500).send()
+        // 500 Internal Server Error
+        return res.status(500).send('Internal Server Error. Please try agrain')
     }
 }
 
@@ -59,7 +78,7 @@ exports.update = async (req, res) => {
                 email: req.body.email,
                 facebook: req.body.facebook,
                 whatsapp: req.body.whatsapp,
-                typeUser_id: req.body.typeUser_id,
+                sportType_id: req.body.sportType_id,
                 updatedAt: new Date()
             }})
             return res.status(200).send('')
@@ -67,7 +86,9 @@ exports.update = async (req, res) => {
         return res.status(400).send("")
 
     } catch (error) {
-      return res.status(500).send('')
+        console.log(error)
+        // 500 Internal Server Error
+        return res.status(500).send('Internal Server Error. Please try agrain')
     }
 }
 
@@ -82,6 +103,7 @@ exports.destory = async (req, res) => {
             }
         })
     } catch (error) {
+        console.log(error)
         // 500 Internal Server Error
         return res.status(500).send('Internal Server Error. Please try agrain')
     }

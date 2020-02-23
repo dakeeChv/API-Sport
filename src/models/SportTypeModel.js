@@ -4,6 +4,6 @@ const TypeSchema = mongoose.Schema({
     name: { type: String, required: true, unique: true },
     createdAt: { type: Date },
     updatedAt: { type: Date, required: true }
-}, { collection: 'TypeSport'})
+}, { collection: 'SportTypes'})
 
-module.exports = mongoose.model('TypeSport', TypeSchema)
+module.exports = mongoose.model('SportTypes', TypeSchema)

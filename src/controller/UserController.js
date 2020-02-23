@@ -8,17 +8,17 @@ exports.signup = async (req, res, next) => {
         const { error } = validateSignup(req.body)
         if (error) return res.status(400).send(error.details[0].message)
 
-        const accountExist = await User.findOne({ account_name: req.body.account_name })
+        const accountExist = await User.findOne({ username: req.body.username })
         if (accountExist) return res.status(400).send('Account Already Exists')
 
         var salt = await bcryptjs.genSalt(8)
         var hash = await bcryptjs.hash(req.body.password, salt)
 
         const UserInfo = new User({
-            account_name : req.body.account_name,
+            username : req.body.username,
             password : hash,
-            classId : req.body.classId,
-            typeUserId : req.body.typeUserId,
+            classroom_id : req.body.classroom_id,
+            userType_id : req.body.userType_id,
             createdAt: new Date(),
             updatedAt: new Date()
         })
@@ -42,7 +42,7 @@ exports.signin = async (req, res, next) => {
         //401 Unauthorized
         if(error) return res.status(401).send({ message: 'info incorrect, ' + error.details[0].message })
 
-        await User.findOne({ account_name: req.body.account_name }).then(async user => { 
+        await User.findOne({ username: req.body.username }).then(async user => { 
             if (user) {
                 const { password } = user
 
@@ -82,10 +82,10 @@ exports.update = async (req, res, next) => {
 
 
         await User.updateOne({_id: req.body.id}, {$set: {
-            account_name : req.body.account_name,
+            username : req.body.username,
             password : hash,
-            classId : req.body.classId,
-            typeUserId : req.body.typeUserId,
+            classroom_id : req.body.classroom_id,
+            userType_id : req.body.userType_id,
             updatedAt: new Date()
         }})
 
@@ -120,15 +120,28 @@ exports.destory = async (req, res) => {
         // 500 Internal Server Error
         return res.status(500).send('Internal Server Error. Please try agrain')
     }
-} 
+}
+
+exports.read = async (req, res) =>{
+    try {
+        const UserInfo = await User.find().populate('userType_id classroom_id')
+        return res.status(200).send(UserInfo)
+
+    } catch (error) {
+        console.log(error)
+        // 500 Internal Server Error
+        return res.status(500).send('Internal Server Error. Please try agrain')
+    }
+}
+
 
 
 function validateSignup (data) {
     Schema = Joi.object().keys({
-        account_name: Joi.string().min(4).required(),
+        username: Joi.string().min(4).required(),
         password: Joi.string().pattern(new RegExp('^[a-zA-Z0-9]{3,30}$')).min(8).required(),
-        classId: Joi.string().required(),
-        typeUserId: Joi.string().required()
+        classroom_id: Joi.string().required(),
+        userType_id: Joi.string().required()
     })
 
     return Schema.validate(data)
@@ -136,7 +149,7 @@ function validateSignup (data) {
 
 function validateSignin (data) {
     Schema = Joi.object().keys({
-        account_name: Joi.string().min(4).required(),
+        username: Joi.string().min(4).required(),
         password: Joi.string().min(8).required(),
     })
 
@@ -146,10 +159,10 @@ function validateSignin (data) {
 function validateUpdate (data) {
     Schema = Joi.object().keys({
         id: Joi.string().required(),
-        account_name: Joi.string().min(4).required(),
+        username: Joi.string().min(4).required(),
         password: Joi.string().min(8).required(),
-        classId: Joi.string().required(),
-        typeUserId: Joi.string().required()
+        classroom_id: Joi.string().required(),
+        userType_id: Joi.string().required()
     })
 
     return Schema.validate(data)

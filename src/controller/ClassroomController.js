@@ -6,7 +6,9 @@ exports.read = async (req, res) =>{
         return res.status(200).send(classroomInfo)
 
     } catch (error) {
-        return res.status(500).send('')
+        console.log(error)
+        // 500 Internal Server Error
+        return res.status(500).send('Internal Server Error. Please try agrain')
     }
 }
 
@@ -16,7 +18,9 @@ exports.search = async (req, res) =>{
         return res.status(200).send(classroomInfo)
 
     } catch (error) {
-        return res.status(500).send('')
+        console.log(error)
+        // 500 Internal Server Error
+        return res.status(500).send('Internal Server Error. Please try agrain')
     }
 }
 
@@ -37,7 +41,8 @@ exports.create = async (req, res) => {
 
     } catch (error) {
         console.log(error)
-        return res.status(500).send('')
+        // 500 Internal Server Error
+        return res.status(500).send('Internal Server Error. Please try agrain')
     }
 }
 
@@ -55,7 +60,9 @@ exports.update = async (req, res) => {
         return res.status(400).send("")
 
     } catch (error) {
-      return res.status(500).send('')
+        console.log(error)
+        // 500 Internal Server Error
+        return res.status(500).send('Internal Server Error. Please try agrain')
     }
 }
 
@@ -70,6 +77,7 @@ exports.destory = async (req, res) => {
             }
         })
     } catch (error) {
+        console.log(error)
         // 500 Internal Server Error
         return res.status(500).send('Internal Server Error. Please try agrain')
     }

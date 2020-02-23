@@ -8,7 +8,7 @@ exports.auth = function (req, res, next) {
         error: "you can't access to the resource."
       })
     } else {
-      req.user = user;
+      req.user = user
       next()
     }
   })(req, res, next)

@@ -6,7 +6,9 @@ exports.read = async (req, res) =>{
         return res.status(200).send(userTypeInfo)
 
     } catch (error) {
-        return res.status(500).send('')
+        console.log(error)
+        // 500 Internal Server Error
+        return res.status(500).send('Internal Server Error. Please try agrain')
     }
 }
 
@@ -19,11 +21,12 @@ exports.create = async (req, res) => {
         })
 
         await userTypeInfo.save()
-        return res.status(201).send('')
+        return res.status(201).send('create userType')
 
     } catch (error) {
         console.log(error)
-        return res.status(500).send('')
+        // 500 Internal Server Error
+        return res.status(500).send('Internal Server Error. Please try agrain')
     }
 }
 
@@ -35,12 +38,14 @@ exports.update = async (req, res) => {
                 user_type: req.body.user_type,
                 updatedAt: new Date()
             }})
-            return res.status(200).send('')
+            return res.status(200).send('update UserType, Success')
         }
         return res.status(400).send("")
 
     } catch (error) {
-      return res.status(500).send('')
+        console.log(error)
+        // 500 Internal Server Error
+        return res.status(500).send('Internal Server Error. Please try agrain')
     }
 }
 
@@ -49,12 +54,13 @@ exports.destory = async (req, res) => {
         await userType.findOne({ _id: req.params.id }).then(async userType => {
             if (userType) {
                 await userType.deleteOne({ _id: req.params.id })
-                return res.status(200).send('Deleted Success')
+                return res.status(200).send('Delete UserType, Success')
             } else {
                 return res.status(400).send()
             }
         })
     } catch (error) {
+        console.log(error)
         // 500 Internal Server Error
         return res.status(500).send('Internal Server Error. Please try agrain')
     }

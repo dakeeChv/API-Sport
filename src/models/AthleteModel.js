@@ -8,7 +8,8 @@ const athleteSchema = mongoose.Schema({
     email: {type: String, required: true},
     facebook: {type: String, required: true},
     whatsapp: {type: String, required: true},
-    typeUser_id: {type: String, required: true},
+    user_id: {type: String, required: true},
+    sportType_id: {type: Object, ref: 'SportTypes', required: true},
     createdAt:{ type: Date},
     updatedAt: { type: Date, required: true}
 },{ collection: 'Athletes'})
