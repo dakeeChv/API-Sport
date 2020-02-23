@@ -4,8 +4,8 @@ const jwt = require('jsonwebtoken')
 const UserSchema = mongoose.Schema({
     username: { type: String, required: true },
     password: { type: String, required: true },
-    classroom_id: { type: mongoose.Schema.Types.ObjectId, ref: 'Classrooms', required: true },
-    userType_id: { type: mongoose.Schema.Types.ObjectId, ref: 'UserTypes', required: true },
+    classroom_id: { type: Object, ref: 'Classrooms', required: true },
+    userType_id: { type: Object, ref: 'UserTypes', required: true },
     createdAt: { type: String },
     updatedAt: { type: String, required: true }
 }, { collection: 'Users' })

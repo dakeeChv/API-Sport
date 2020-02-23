@@ -4,7 +4,7 @@ const bcryptjs = require('bcryptjs')
 
 exports.signup = async (req, res, next) => {
     try {
-
+        console.log(req.body)
         const { error } = validateSignup(req.body)
         if (error) return res.status(400).send(error.details[0].message)
 
@@ -26,7 +26,7 @@ exports.signup = async (req, res, next) => {
         await UserInfo.save()
         const token = UserInfo.generateJWT()
         
-        res.status(201).header('authorization', token).end('Signup, Success')
+        res.status(201).header('authorization', token).send('Signup, Success')
 
     } catch (error) {
         console.log(error)

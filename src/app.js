@@ -27,4 +27,7 @@ app.use(
 )
 //app.use(require('./routes/SportTypeRoute'))
 
-module.exports = app
+app.listen(5000, (err) => {
+    if (err) throw err
+    console.log('Server Running 5000 ...')
+})
