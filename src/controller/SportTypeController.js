@@ -29,6 +29,7 @@ exports.create = async (req, res) => {
         return res.status(201).send('Create SportType, Success')
 
     } catch (error) {
+        console.log(error)
         // 500 Internal Server Error
         return res.status(500).send('Internal Server Error. Please try agrain')
     }
