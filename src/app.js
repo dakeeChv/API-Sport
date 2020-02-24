@@ -25,6 +25,5 @@ app.use(
     require('./routes/AthleteRoute'),
     require('./routes/UserTypeRoute')
 )
-//app.use(require('./routes/SportTypeRoute'))
 
 module.exports = app

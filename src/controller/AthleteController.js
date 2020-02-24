@@ -2,7 +2,8 @@ const athlete = require('../models/AthleteModel')
 
 exports.read = async (req, res) =>{
     try {
-        const athleteInfo = await athlete.find().populate('sportType_id')
+        const user_id = req.user._id
+        const athleteInfo = await athlete.find({ user_id: user_id }).populate('sportType_id')
         return res.status(200).send(athleteInfo)
 
     } catch (error) {
@@ -14,7 +15,8 @@ exports.read = async (req, res) =>{
 
 exports.readByChoice = async (req, res) =>{
     try {
-        const athleteInfo = await athlete.find().all('sportType_id', req.body).populate('sportType_id')
+        const user_id = req.user._id
+        const athleteInfo = await athlete.find({ user_id: user_id }).all('sportType_id', req.body).populate('sportType_id')
         return res.status(200).send(athleteInfo)
 
     } catch (error) {
@@ -26,10 +28,14 @@ exports.readByChoice = async (req, res) =>{
 
 exports.search = async (req, res) =>{
     try {
-        const athleteInfo = await athlete.find({ $or: [
-            {name: req.body.keyword},
-            {surname: req.body.keyword}
-        ]})
+        const user_id = req.user._id
+        const athleteInfo = await athlete.find({ $and: [
+            { $or: [
+                {name: {$regex: req.body.keyword}},
+                {surname: {$regex: req.body.keyword}}
+            ]},
+            { user_id: user_id}
+        ]}).populate('sportType_id')
         return res.status(200).send(athleteInfo)
 
     } catch (error) {
@@ -73,17 +79,17 @@ exports.update = async (req, res) => {
             await athlete.updateOne({ _id: req.body.id }, {$set: {
                 name: req.body.name,
                 surname: req.body.surname,
-                mobile: req.body.modile,
-                DOB: req.body.BOB,
+                mobile: req.body.mobile,
+                DOB: req.body.DOB,
                 email: req.body.email,
                 facebook: req.body.facebook,
                 whatsapp: req.body.whatsapp,
                 sportType_id: req.body.sportType_id,
                 updatedAt: new Date()
             }})
-            return res.status(200).send('')
+            return res.status(200).send('update Athlete, Success')
         }
-        return res.status(400).send("")
+        return res.status(400).send("update fail")
 
     } catch (error) {
         console.log(error)
@@ -97,7 +103,7 @@ exports.destory = async (req, res) => {
         await athlete.findOne({ _id: req.params.id }).then(async athlete => {
             if (athlete) {
                 await athlete.deleteOne({ _id: req.params.id })
-                return res.status(200).send('Deleted Success')
+                return res.status(200).send('Delete Athlete, Success')
             } else {
                 return res.status(400).send()
             }

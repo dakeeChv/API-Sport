@@ -14,8 +14,13 @@ exports.read = async (req, res) =>{
 
 exports.search = async (req, res) =>{
     try {
-        const classroomInfo = await classroom.find({ classroom: req.body.classroom})
-        return res.status(200).send(classroomInfo)
+        await classroom.find({ classroom: { $regex: req.body.classroom } }).then(classroomInfo => {
+            if (classroom) {
+                return res.status(200).send(classroomInfo) 
+            } else {
+                return res.status(404).send('Not Found Classroom')
+            }
+        })
 
     } catch (error) {
         console.log(error)
@@ -27,7 +32,7 @@ exports.search = async (req, res) =>{
 exports.create = async (req, res) => {
     try {
         const classroomExist = await classroom.findOne({ classroom: req.body.classroom })
-        if (classroomExist) return res.status(400).send('')
+        if (classroomExist) return res.status(400).send('Classroom Already Exists')
 
         const classroomInfo = new classroom({
             classroom: req.body.classroom,
@@ -37,7 +42,7 @@ exports.create = async (req, res) => {
         })
 
         await classroomInfo.save()
-        return res.status(201).send('')
+        return res.status(201).send('Create Classroom, Success')
 
     } catch (error) {
         console.log(error)
@@ -55,9 +60,9 @@ exports.update = async (req, res) => {
                 color: req.body.color,
                 updatedAt: new Date()
             }})
-            return res.status(200).send('')
+            return res.status(200).send('Update Classroom, success')
         }
-        return res.status(400).send("")
+        return res.status(400).send("Classroom can't update")
 
     } catch (error) {
         console.log(error)
@@ -66,14 +71,14 @@ exports.update = async (req, res) => {
     }
 }
 
-exports.destory = async (req, res) => {
+exports.destroy = async (req, res) => {
     try {
         await classroom.findOne({ _id: req.params.id }).then(async classroom => {
             if (classroom) {
                 await classroom.deleteOne({ _id: req.params.id })
-                return res.status(200).send('Deleted Success')
+                return res.status(200).send('Delete Classroom, Success')
             } else {
-                return res.status(400).send("S")
+                return res.status(400).send("can't delete classroom")
             }
         })
     } catch (error) {

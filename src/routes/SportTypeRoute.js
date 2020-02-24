@@ -4,7 +4,7 @@ const { admin } = require('../middleware/isAdmin')
 
 const { read, create, update, destory } = require('../controller/SportTypeController')
 
-router.get('/type-of-sport', admin, read)
+router.get('/type-of-sport', read)
 router.post('/type-of-sport', create)
 router.patch('/type-of-sport', update)
 router.delete('/type-of-sport/:id', destory)

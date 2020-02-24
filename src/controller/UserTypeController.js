@@ -21,7 +21,7 @@ exports.create = async (req, res) => {
         })
 
         await userTypeInfo.save()
-        return res.status(201).send('create userType')
+        return res.status(201).send('create userType, Success')
 
     } catch (error) {
         console.log(error)
