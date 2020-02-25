@@ -2,8 +2,8 @@ const athlete = require('../models/AthleteModel')
 
 exports.read = async (req, res) =>{
     try {
-        const classroom_id = req.body.classroom_id
-        const athleteInfo = await athlete.find({ classroom_id: classroom_id }).populate('sportType_id')
+        const user_id = req.body.user_id
+        const athleteInfo = await athlete.find({ user_id: user_id }).populate('sportType_id')
         return res.status(200).send(athleteInfo)
 
     } catch (error) {
@@ -15,8 +15,8 @@ exports.read = async (req, res) =>{
 
 exports.readByChoice = async (req, res) =>{
     try {
-        const classroom_id = req.body.classroom_id
-        const athleteInfo = await athlete.find({ classroom_id: classroom_id }).all('sportType_id', req.body).populate('sportType_id')
+        const user_id = req.body.user_id
+        const athleteInfo = await athlete.find({ user_id: user_id }).all('sportType_id', req.body).populate('sportType_id')
         return res.status(200).send(athleteInfo)
 
     } catch (error) {
@@ -28,13 +28,13 @@ exports.readByChoice = async (req, res) =>{
 
 exports.search = async (req, res) =>{
     try {
-        const classroom_id = req.body.classroom_id
+        const user_id = req.body.user_id
         const athleteInfo = await athlete.find({ $and: [
             { $or: [
                 {name: {$regex: req.body.keyword}},
                 {surname: {$regex: req.body.keyword}}
             ]},
-            { classroom_id: classroom_id }
+            { user_id: user_id }
         ]}).populate('sportType_id')
         return res.status(200).send(athleteInfo)
 
