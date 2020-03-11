@@ -1,8 +1,19 @@
 const athlete = require('../models/AthleteModel')
 
+// This is admin's tool
+
+// Get to all athlete in a classroom
+// Ex: 
+// respone from postman 
+/**
+ * 5e5376bfe2af01725cccb995 is id of 3COM2
+ * response: { "user_id" : "5e5376bfe2af01725cccb995" }
+ * 
+ * Get to all athlete in 3COM2
+ */
 exports.read = async (req, res) =>{
     try {
-        const user_id = req.body.user_id
+        const user_id = req.body.user_id  // use id of user, replace classroom
         const athleteInfo = await athlete.find({ user_id: user_id }).populate('sportType_id')
         return res.status(200).send(athleteInfo)
 
@@ -13,10 +24,11 @@ exports.read = async (req, res) =>{
     }
 }
 
+// Get to athlete by type of sport
 exports.readByChoice = async (req, res) =>{
     try {
-        const user_id = req.body.user_id
-        const athleteInfo = await athlete.find({ user_id: user_id }).all('sportType_id', req.body).populate('sportType_id')
+        const user_id = req.body.user_id // use id of user, replace classroom and select with type of sport
+        const athleteInfo = await athlete.find({ user_id: user_id }).all('sportType_id', req.body.sportType).populate('sportType_id')
         return res.status(200).send(athleteInfo)
 
     } catch (error) {
@@ -26,6 +38,7 @@ exports.readByChoice = async (req, res) =>{
     }
 }
 
+// Search athlete by name or surname 
 exports.search = async (req, res) =>{
     try {
         const user_id = req.body.user_id
@@ -45,6 +58,7 @@ exports.search = async (req, res) =>{
     }
 }
 
+// Add athlete by select user_id for classroom of athlete
 exports.create = async (req, res) => {
     try {
         const athleteInfo = new athlete({
@@ -71,6 +85,7 @@ exports.create = async (req, res) => {
     }
 }
 
+// Update info of athlete
 exports.update = async (req, res) => {
     try {
         const athleteExist = await athlete.findOne({ _id: req.body.id })
@@ -97,6 +112,7 @@ exports.update = async (req, res) => {
     }
 }
 
+// delete athlete by id
 exports.destory = async (req, res) => {
     try {
         await athlete.findOne({ _id: req.params.id }).then(async athlete => {

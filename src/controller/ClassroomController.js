@@ -1,5 +1,6 @@
 const classroom = require('../models/ClassroomModel')
 
+// Get to all info about Classroom
 exports.read = async (req, res) =>{
     try {
         const classroomInfo = await classroom.find()
@@ -12,6 +13,7 @@ exports.read = async (req, res) =>{
     }
 }
 
+// search classroom
 exports.search = async (req, res) =>{
     try {
         await classroom.find({ classroom: { $regex: req.body.classroom } }).then(classroomInfo => {
@@ -29,6 +31,7 @@ exports.search = async (req, res) =>{
     }
 }
 
+// Add new classroom
 exports.create = async (req, res) => {
     try {
         const classroomExist = await classroom.findOne({ classroom: req.body.classroom })
@@ -51,6 +54,7 @@ exports.create = async (req, res) => {
     }
 }
 
+// Update info of classroom
 exports.update = async (req, res) => {
     try {
         const classroomExist = await classroom.findOne({ _id: req.body.id })
@@ -71,6 +75,7 @@ exports.update = async (req, res) => {
     }
 }
 
+// delete classroom
 exports.destroy = async (req, res) => {
     try {
         await classroom.findOne({ _id: req.params.id }).then(async classroom => {

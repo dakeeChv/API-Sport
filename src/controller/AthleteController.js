@@ -1,5 +1,6 @@
 const athlete = require('../models/AthleteModel')
 
+// Get all athlete (Only class of user)
 exports.read = async (req, res) =>{
     try {
         const user_id = req.user._id
@@ -13,6 +14,7 @@ exports.read = async (req, res) =>{
     }
 }
 
+// Get athlete by type of sport (Only class of user)
 exports.readByChoice = async (req, res) =>{
     try {
         const user_id = req.user._id
@@ -26,6 +28,7 @@ exports.readByChoice = async (req, res) =>{
     }
 }
 
+// search athlete (Only class of user)
 exports.search = async (req, res) =>{
     try {
         const user_id = req.user._id
@@ -45,6 +48,7 @@ exports.search = async (req, res) =>{
     }
 }
 
+// Add athlete (Only class of user)
 exports.create = async (req, res) => {
     try {
         const { _id } = req.user
@@ -72,6 +76,7 @@ exports.create = async (req, res) => {
     }
 }
 
+// Update athlete (Only class of user)
 exports.update = async (req, res) => {
     try {
         const athleteExist = await athlete.findOne({ _id: req.body.id })
@@ -98,6 +103,7 @@ exports.update = async (req, res) => {
     }
 }
 
+// delete athlete by id (Only class of user)
 exports.destory = async (req, res) => {
     try {
         await athlete.findOne({ _id: req.params.id }).then(async athlete => {
