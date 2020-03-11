@@ -9,3 +9,10 @@ router.delete('/user/:id', admin, destory)
 router.get('/user/', admin, read)
 
 module.exports = router
+
+/**Admin: CEIT-Software
+ * Password: 123456789
+ * 
+ * User: 3COM1
+ * password: 123456789
+ */

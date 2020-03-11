@@ -23,7 +23,8 @@ app.use(
     require('./routes/SportTypeRoute'),
     require('./routes/ClassroomRoute'),
     require('./routes/AthleteRoute'),
-    require('./routes/UserTypeRoute')
+    require('./routes/UserTypeRoute'),
+    require('./routes/AdminToolRoute')
 )
 
 module.exports = app

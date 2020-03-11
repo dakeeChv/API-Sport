@@ -1,5 +1,6 @@
 const userType = require('../models/UserTypeModel')
 
+// Get to all type of user
 exports.read = async (req, res) =>{
     try {
         const userTypeInfo = await userType.find()
@@ -12,6 +13,7 @@ exports.read = async (req, res) =>{
     }
 }
 
+// add type of user
 exports.create = async (req, res) => {
     try {
         const userTypeInfo = new userType({
@@ -30,6 +32,7 @@ exports.create = async (req, res) => {
     }
 }
 
+// update type of user
 exports.update = async (req, res) => {
     try {
         const userTypeExist = await userType.findOne({ _id: req.body.id })
@@ -49,6 +52,7 @@ exports.update = async (req, res) => {
     }
 }
 
+// delete type of user
 exports.destory = async (req, res) => {
     try {
         await userType.findOne({ _id: req.params.id }).then(async userType => {

@@ -2,6 +2,7 @@ const User = require('../models/UserModel')
 const Joi = require('@hapi/joi')
 const bcryptjs = require('bcryptjs')
 
+// sign up for use API
 exports.signup = async (req, res, next) => {
     try {
 
@@ -35,6 +36,7 @@ exports.signup = async (req, res, next) => {
     }
 }
 
+// Login
 exports.signin = async (req, res, next) => {
     try {
         const {error} = validateSignin(req.body)
@@ -69,6 +71,7 @@ exports.signin = async (req, res, next) => {
     }
 }
 
+// Update info of User
 exports.update = async (req, res, next) => {
     try{
         const { error } = validateUpdate(req.body)
@@ -100,6 +103,7 @@ exports.update = async (req, res, next) => {
     }
 }
 
+// delete user account
 exports.destory = async (req, res) => {
     try {
         const id = req.params.id
@@ -122,6 +126,7 @@ exports.destory = async (req, res) => {
     }
 }
 
+// Get to info about all user
 exports.read = async (req, res) =>{
     try {
         const UserInfo = await User.find().populate('userType_id classroom_id')

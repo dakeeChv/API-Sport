@@ -1,5 +1,6 @@
 const SportType = require('../models/SportTypeModel')
 
+// Get to all type of sport
 exports.read = async (req, res) => {
     try {
         const SportTypeInfo = await SportType.find()
@@ -12,6 +13,7 @@ exports.read = async (req, res) => {
     }
 }
 
+// Add type of sport
 exports.create = async (req, res) => {
     try {
         const SportTypeExist = await SportType.findOne({ name: req.body.name })
@@ -34,6 +36,7 @@ exports.create = async (req, res) => {
     }
 }
 
+// update type of sport
 exports.update = async (req, res) => {
     try {
         const SportTypeExist = await SportType.findOne({ _id: req.body.id })
@@ -53,6 +56,7 @@ exports.update = async (req, res) => {
     }
 }
 
+// delete type of sport
 exports.destory = async (req, res) => {
     try {
         await SportType.findOne({ _id: req.params.id }).then(async SportType => {
